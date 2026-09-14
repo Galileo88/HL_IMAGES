@@ -1,0 +1,20 @@
+HOOPLAND LEAGUE STUDIO — STANDALONE
+
+1. Extract the ZIP, if you downloaded it.
+2. Double-click Hoopland League Studio.html. It opens in your browser.
+3. Import a Hoopland league .txt, make your edits, and choose Export .txt.
+
+No installation, ChatGPT account, Node.js, or server is required.
+The sample league, styling, code, and all 119 archive images are inside the HTML file. You can move it anywhere or copy it to another computer.
+
+Editing, the bundled archive, and sampling bundled/uploaded images work offline. Checking externally hosted logos, courts, and announcer-table images during export requires an internet connection. Remote color sampling also depends on the image host allowing it; upload a copy if necessary.
+
+Use Chrome or Edge. If Copy URL is unavailable, select the URL field and press Ctrl+C.
+Export your league before closing or refreshing. Edits are held in memory, not saved automatically.
+
+This is a standalone browser application, not a native Windows .exe. This copy does not auto-update when the hosted version changes.
+
+ONLINE TEAM LOCATION LOOKUP
+Team configuration now includes searchable Country → State/Province/Region → City selectors. The lists are fetched only when needed, cached locally when the browser allows it, and are not bundled into the HTML. Selecting a city resolves its latitude/longitude and writes Hoopland's native location values (X = latitude × 100, Y = longitude × 100). The Location section is a collapsible panel above Front Office. City name and X/Y coordinates remain directly editable when offline or when a lookup fails.
+
+The location selector uses CountriesNow for country/state/city lists and Open-Meteo geocoding (GeoNames data) for coordinates. Internet access is required for assisted lookup.
