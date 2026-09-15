@@ -1,9 +1,23 @@
-# Current standalone version
+# Standalone development
 
-The user supplied an updated `Hoopland League Studio.html` on September 14, 2026. Treat this HTML as the current authoritative application. It includes online location selection and other changes not yet synchronized to `league-editor/dist`.
+`Hoopland League Studio.html` is the authoritative application: its JavaScript, styles, and optional league template are embedded. No hosted project or build dependencies are required.
 
-Run `node build-standalone.mjs` to refresh embedded images, paths, dimensions, and categories from UBA, NCSA, and ads. The builder now preserves this HTML's application code and retains moved paths as import aliases. Ambiguous moves or new images without metadata stop the refresh. Do not rebuild from the older league-editor/dist application.
+From the repository root, run:
 
-Run `node verify-standalone.mjs`, `node verify-standalone-picker.mjs`, and `node verify-standalone-assets.mjs` after refreshing. For packaging, zip the existing HTML and READ ME.txt directly.
+```
+node build-standalone.mjs
+node verify-standalone.mjs
+node verify-standalone-assets.mjs
+node verify-standalone-picker.mjs
+node verify-league-structure.cjs
+```
 
-The user wants standalone-only development. Do not deploy the hosted site unless explicitly requested.
+The validation script never scans or bundles repository images. User archives are added through the application.
+
+Package with PowerShell:
+
+```
+Compress-Archive -LiteralPath 'standalone/Hoopland League Studio.html','standalone/READ ME.txt' -DestinationPath 'standalone/Hoopland League Studio.zip' -Force
+```
+
+The ZIP contains only the standalone HTML and user instructions. Keep the filename/location stable where practical because browser draft storage may depend on it.
