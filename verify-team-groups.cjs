@@ -1,0 +1,13 @@
+const fs=require('fs'),vm=require('vm'),assert=require('assert/strict');
+const h=fs.readFileSync('standalone/Hoopland League Studio.html','utf8'),start=h.indexOf('function listTeams(){'),end=h.indexOf('\nfunction ',start+1);
+const league={conferences:['East','West'],divisions:['Atlantic','Central','Pacific','Mountain'],teams:[{name:'West team',division:2},{name:'East team',division:0},{name:'Unknown',division:99}],starTeams:[{name:'Stars'}]};
+const nodes={};const node=(tag,cls,text)=>({tag,text,children:[],append(...n){this.children.push(...n)},replaceChildren(){this.children=[]}});
+nodes['#teams']=node();nodes['#teamSearch']={value:''};nodes['#teamCount']={};
+const context={league,$:s=>nodes[s],el:node,view:'league',selected:0,teamList:'teams',canNavigate:()=>true,render(){}};
+vm.createContext(context);vm.runInContext(h.slice(start,end),context);context.listTeams();
+assert.deepEqual(nodes['#teams'].children.filter(n=>n.tag==='h3').map(n=>n.text),['East','West','Unassigned teams','All-Star teams']);
+nodes['#teams'].children.filter(n=>n.tag==='button')[0].onclick();assert.equal(context.selected,1);
+nodes['#teamSearch'].value='west';context.listTeams();assert.equal(nodes['#teams'].children.filter(n=>n.tag==='button').length,1);
+league.teams[0].division=1;context.listTeams();assert.equal(nodes['#teams'].children[0].text,'East');
+nodes['#teamSearch'].value='absent';context.listTeams();assert.equal(nodes['#teams'].children[0].text,'No teams match your search.');
+console.log('Grouping checks passed: conference/division order, original selection indexes, search, reassignment, unassigned and All-Star teams.');
