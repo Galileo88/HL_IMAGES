@@ -16,7 +16,7 @@ const retained=previous.filter(asset=>!asset.path.startsWith('NCSA/tournament/')
 const assets=retained.map(asset=>{
  let current=paths.includes(asset.path)?asset.path:null;
  if(!current){
-  const candidates=paths.filter(p=>path.posix.basename(p)===path.posix.basename(asset.path)&&p.split('/')[0]===asset.path.split('/')[0]);
+  const candidates=paths.filter(p=>(!asset.path.includes('/logos/')||p.includes('/logos/'))&&path.posix.basename(p).replace('_logo','')===path.posix.basename(asset.path).replace('_logo','')&&p.split('/')[0]===asset.path.split('/')[0]);
   assert.equal(candidates.length,1,`Cannot unambiguously relocate ${asset.path}`);
   current=candidates[0];moved.push([asset.path,current]);
  }
@@ -28,7 +28,10 @@ const assets=retained.map(asset=>{
  aliases:[...new Set([...(asset.aliases||[]),...(current!==asset.path?[asset.path]:[])])],
  width:bytes.readUInt32BE(16),height:bytes.readUInt32BE(20),local:'data:image/png;base64,'+bytes.toString('base64')};
 });
-assert.equal(used.size,paths.length,'New images need archive metadata before packaging');
+for(const current of paths.filter(p=>!used.has(p))){
+ const bytes=fs.readFileSync(path.join(root,current));
+ assets.push({path:current,name:path.posix.basename(current,'.png').replaceAll('_',' '),group:current.split('/')[0],kind:current.startsWith('ads/')?'Ads':current.includes('/logos/')?'Logos':'Courts',era:current.includes('/classic/')?'Classic':'Modern',aliases:[],url:'https://raw.githubusercontent.com/Galileo88/HL_IMAGES/main/'+current,local:'data:image/png;base64,'+bytes.toString('base64'),width:bytes.readUInt32BE(16),height:bytes.readUInt32BE(20)});
+}
 assets.sort((a,b)=>a.name.localeCompare(b.name)||a.path.localeCompare(b.path));
 html=html.replace(declaration,()=> 'const standaloneAssets='+JSON.stringify(assets).replace(/</g,'\\u003c')+';');
 html=html.replaceAll('assets.find(a=>a.path===p)','assets.find(a=>a.path===p||a.aliases?.includes(p))');

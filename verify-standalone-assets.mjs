@@ -3,7 +3,7 @@ import vm from 'node:vm';
 import assert from 'node:assert/strict';
 const html=fs.readFileSync('standalone/Hoopland League Studio.html','utf8');
 const assets=JSON.parse(html.match(/const standaloneAssets=([^\n]+);/)[1]);
-assert.equal(assets.length,111);
+assert.equal(assets.length,129);
 assert.ok(assets.every(asset=>!asset.path.startsWith('NCSA/tournament/')));
 const helper=html.slice(html.indexOf('function archiveURL('),html.indexOf('function imageDimensions('));
 const resolve=vm.runInNewContext(helper+';archiveURL',{URL});

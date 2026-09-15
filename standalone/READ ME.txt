@@ -5,7 +5,7 @@ HOOPLAND LEAGUE STUDIO — STANDALONE
 3. Import a Hoopland league .txt, make your edits, and choose Export .txt.
 
 No installation, ChatGPT account, Node.js, or server is required.
-The sample league, styling, code, and all 111 archive images are inside the HTML file. You can move it anywhere or copy it to another computer.
+The sample league, styling, code, and all 129 archive images are inside the HTML file. You can move it anywhere or copy it to another computer.
 
 Editing, the bundled archive, and sampling bundled/uploaded images work offline. Checking externally hosted logos, courts, and announcer-table images during export requires an internet connection. Remote color sampling also depends on the image host allowing it; upload a copy if necessary.
 
